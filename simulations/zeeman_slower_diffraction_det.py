@@ -20,7 +20,7 @@ SIM_RESULT_FILE = DATA_FOLDER/"zeeman_slower_diffraction_det.npz"
 
 
 # --- Simulation Parameters ---
-STEPS_NUMBER = 500
+STEPS_NUMBER = 200
 TOTAL_DURATION = 0.1
 MASS = Ytterbium().mass
 KB = csts.Boltzmann
@@ -56,36 +56,33 @@ trajectories = coll.y
 
 # --- Catching Criteria ---
 def catching_rate(traj):
-    """
-    Check the last state of the trajectories and calculates the proportion of atoms being caught by the MOT. 
-    Args:
-        - traj (ndarray): Array of shape (n_atoms, 6, len(t)) returned by _integrate.
-    
-    Returns:
-        - rate (float) : proportion of atomic being caught in the MOT.
-    """
-    z_trajs = traj[:, 2, :]
-
-    #  Step 1: Determine cutoff mask 
+    z_trajs = traj[:, 2, :]  # Shape: (n_atoms, n_timesteps)
     cutoff = 0.35
 
-    # For each atom, find the first index where z > cutoff
-    cut_indices = np.searchsorted(z_trajs, cutoff, side='right')
-
-    # Create mask array: True for timesteps to consider
-    # Each row is an atom, each column a timestep
-    time_indices = np.arrange(z_trajs.shape[1])
-    mask = time_indices < cut_indices[:, 'None']    # shape (n_atoms, len(t))
+    # --- Step 1: Determine cutoff mask ---
+    # Find the first index where z > cutoff for each atom
+    # np.argmax returns the first index where the condition is True
+    # If it's never True, it returns 0, so we handle that case.
+    greater_than_cutoff = z_trajs > cutoff
+    cut_indices = np.argmax(greater_than_cutoff, axis=1)
     
-    # Step 2: Determine final state for each atom 
+    # If argmax is 0 but the value isn't > cutoff, it means it never crossed
+    never_crossed = ~np.any(greater_than_cutoff, axis=1)
+    cut_indices[never_crossed] = z_trajs.shape[1]
+
+    # Create mask using broadcasting
+    time_indices = np.arange(z_trajs.shape[1])
+    mask = time_indices < cut_indices[:, np.newaxis] 
+    
+    # --- Step 2: Determine final state ---
     z_final = z_trajs[:, -1]
-    z_max = np.max(z_trajs, axis=1)  # maximum z 
+    z_max = np.max(z_trajs, axis=1)
     
     # --- Step 3: Apply trapping criteria ---
-    escaped = (z_final > 0.05) | (z_final < -0.05) | (~mask[:, -1])
+    # Using the mask to see if the atom was cut off before the end
+    escaped = (z_final > 0.05) | (z_final < -0.05) | (cut_indices < z_trajs.shape[1])
     lost    = (~escaped) & (z_max > 0.01)
     trapped = ~(escaped | lost)
-
 
     # --- Step 4: Compute fraction trapped ---
     rate = np.mean(trapped)

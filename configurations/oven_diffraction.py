@@ -27,7 +27,7 @@ import matplotlib.pyplot as plt
 
 
 # --- Constants Definition ---
-N_ATOMS = 5000
+N_ATOMS = 1000
 OVEN_TEMPERATURE = 550  
 MASS = Strontium().mass
 KB = csts.Boltzmann
@@ -35,7 +35,7 @@ SIGMA = np.sqrt((KB*OVEN_TEMPERATURE)/MASS)
 PI = np.pi
 V_MIN_AXIAL = 5         # Minimum axial speed reached by the atoms right outside the oven, used for computation purposes
 V_MAX_AXIAL = 700       # Maximum axial speed reached by the atoms right outside the oven
-V_MIN_ORTHO = 0.001     # Minimum radial speed reached by the atoms right outside the oven
+V_MIN_ORTHO = 0.0001     # Minimum radial speed reached by the atoms right outside the oven
 V_MAX_ORTHO = 0.015     # Maximum radial speed reached by the atoms right outside the oven
 D = 0.1                 # Diameter of the slit (oven)
 L = 1                   # Length of the slit (oven)
@@ -169,6 +169,8 @@ def sample_positions():
     """
     R = D / 2
     positions = np.zeros((N_ATOMS, 3))  
+
+    positions[:, 2] = -0.15
 
     count = 0
     while count < N_ATOMS:
