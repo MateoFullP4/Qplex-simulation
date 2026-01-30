@@ -16,14 +16,16 @@ from configurations.oven_diffraction import u0_diffraction, N_ATOMS
 # --- Result File ---
 ROOT = Path(__file__).resolve().parent
 DATA_FOLDER = ROOT.parent / "data simulations" / "atomic_flux_fraction"
-SIM_RESULT_FILE = DATA_FOLDER/"zeeman_slower_diffraction_det.npz"
-
+SAVE = False
 
 # --- Simulation Parameters ---
 STEPS_NUMBER = 200
 TOTAL_DURATION = 0.1
 MASS = Ytterbium().mass
 KB = csts.Boltzmann
+TRANS = Ytterbium().trans["main"]
+GAMMA = TRANS.Gamma
+DETUNINGS = [-0.25*i*GAMMA for i in range(2, 84)]
 
 
 # --- Physical Functions ---
@@ -45,13 +47,7 @@ def axial_temperature(atom_array):
 
 
 # --- Setup Initial Conditions ---
-t = np.linspace(0, TOTAL_DURATION, STEPS_NUMBER)  
-
-
-# --- Setup Simulation ---
-sim_ytterbium = RK4(configuration_MM)
-coll = sim_ytterbium._integrate(u0_diffraction, t)
-trajectories = coll.y
+T = np.linspace(0, TOTAL_DURATION, STEPS_NUMBER)  
 
 
 # --- Catching Criteria ---
@@ -89,12 +85,55 @@ def catching_rate(traj):
 
     return rate
 
-# --- Simulation ---
-print(catching_rate(trajectories))
+
+# --- Change Existing Detunings ---
+def clear_detunings():
+    configuration_MM.rm_atomlight_coupling("main","laser_ZS_1")
 
 
-# --- Save Data ---
 
-# np.savez(SIM_RESULT_FILE, detuning=detuning, rates=rates)
+def add_detunings(detuning):
+    configuration_MM.add_atomlight_coupling("laser_ZS_1", "main", detuning)
+    
 
+
+# --- Running Block ---
+def run_simu():
+    sim_ytterbium = RK4(configuration_MM)
+    coll = sim_ytterbium._integrate(u0_diffraction, T)
+    trajectories = coll.y
+    return trajectories
+
+
+# --- Detunings Sweeping ---
+def detunings_sweeping():
+    rates = []
+    for i, det in enumerate(DETUNINGS):
+        clear_detunings()
+        add_detunings(DETUNINGS[i])
+        traj = run_simu()
+        rate = catching_rate(traj)
+        rates.append(float(rate))
+        print(i)
+
+        if SAVE:
+            gamma_multiplier = det / GAMMA
+            folder_name = f"catching_rate_{gamma_multiplier:.2f}Gamma"
+            save_dir = DATA_FOLDER / folder_name
+            
+            # Create directory if it doesn't exist
+            save_dir.mkdir(parents=True, exist_ok=True)
+            
+            # 3. Saving Data
+            file_path = save_dir / "sim_data.npz"
+            np.savez(file_path, traj=traj, rate=rate, detuning=det)
+            
+            print(f"Iteration {i}: Saved to {folder_name}")
+    
+    return rates
+
+
+
+# --- Print Results ---
+print(detunings_sweeping())
 
