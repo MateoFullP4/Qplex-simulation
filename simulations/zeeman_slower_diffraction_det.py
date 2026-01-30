@@ -131,9 +131,3 @@ def detunings_sweeping():
             print(f"Iteration {i}: Saved to {folder_name}")
     
     return rates
-
-
-
-# --- Print Results ---
-print(detunings_sweeping())
-
