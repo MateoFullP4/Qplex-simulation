@@ -3,7 +3,7 @@ import sys
 import os
 from atomsmltr.simulation import RK4
 from pathlib import Path
-from atomsmltr.atoms import Ytterbium
+from atomsmltr.atoms import Ytterbium, Strontium
 from scipy import constants as csts
 
 
@@ -21,11 +21,11 @@ SAVE = False
 # --- Simulation Parameters ---
 STEPS_NUMBER = 200
 TOTAL_DURATION = 0.1
-MASS = Ytterbium().mass
+MASS = Strontium().mass
 KB = csts.Boltzmann
-TRANS = Ytterbium().trans["main"]
+TRANS = Strontium().trans["main"]
 GAMMA = TRANS.Gamma
-DETUNINGS = [-0.25*i*GAMMA for i in range(2, 84)]
+DETUNINGS = [(-0.5*i*GAMMA) for i in range(2, 40)]
 
 
 # --- Physical Functions ---
@@ -131,3 +131,5 @@ def detunings_sweeping():
             print(f"Iteration {i}: Saved to {folder_name}")
     
     return rates
+
+print(detunings_sweeping())
