@@ -25,7 +25,7 @@ MASS = Strontium().mass
 KB = csts.Boltzmann
 TRANS = Strontium().trans["main"]
 GAMMA = TRANS.Gamma
-DETUNINGS = [(-0.5*i*GAMMA) for i in range(2, 40)]
+DETUNINGS = [(-0.5*i*GAMMA + 0.5) for i in range(2, 40)]
 
 
 # --- Physical Functions ---

@@ -7,7 +7,7 @@ from pathlib import Path
 
 # --- Path Parameters ---
 ROOT = Path(__file__).resolve().parent
-DATA_FOLDER = ROOT.parent / "figures" # Folder to save plots
+DATA_FOLDER = ROOT.parent / "figures" / "magnetic_field" # Folder to save plots
 DATA_FOLDER.mkdir(parents=True, exist_ok=True)
 
 # --- File parameters ---
