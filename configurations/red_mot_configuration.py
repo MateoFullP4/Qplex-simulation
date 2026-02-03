@@ -99,6 +99,6 @@ configuration_MM.add_atomlight_coupling("laser_MM_d1", "main", -1.0*gamma)
 configuration_MM.add_atomlight_coupling("laser_MM_d2", "main", -1.0*gamma)
 configuration_MM.add_atomlight_coupling("laser_MM_d3", "main", -1.4*gamma)
 configuration_MM.add_atomlight_coupling("laser_MM_d4", "main", -1.4*gamma)
-configuration_MM.add_atomlight_coupling("laser_ZS_1", "main", -16.5*gamma)
+configuration_MM.add_atomlight_coupling("laser_ZS_1", "main", -12.5*gamma)
 
 

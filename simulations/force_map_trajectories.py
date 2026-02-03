@@ -12,9 +12,9 @@ from configurations.red_mot_configuration import configuration_MM
 
 # --- Result File ---
 ROOT = Path(__file__).resolve().parent
-DATA_FOLDER = ROOT.parent / "data"
-SIM_RESULT_FILE = DATA_FOLDER/"zeeman_slower.npz"
-SAVE = False
+DATA_FOLDER = ROOT.parent / "data" / "force_map_trajectories"
+SIM_RESULT_FILE = DATA_FOLDER/"zeeman_slower_detuning_12.5.npz"
+SAVE = True
 
 
 # --- Setup Initial Conditions ---
