@@ -7,16 +7,16 @@ from pathlib import Path
 
 # --- Path Parameters ---
 ROOT = Path(__file__).resolve().parent
-DATA_FOLDER = ROOT.parent / "figures"
-DATA_FOLDER.mkdir(parents=True, exist_ok=True)
+FIGURE_FOLDER = ROOT.parent / "figures" / "force_map_trajectories"
+FIGURE_FOLDER.mkdir(parents=True, exist_ok=True)
 SIM_DATA_FILE = ROOT.parent / "data simulations" / "zeeman_slower.npz"
 
 # --- File parameters ---
 SAVE = True
 SHOW = True
-FIG_NAME = "force_map_trajectories"
+FIG_NAME = "force_map_trajectories_detunings_16.5"
 SAVE_FMT = "pdf"
-SAVE_DIR = DATA_FOLDER
+SAVE_DIR = FIGURE_FOLDER
 
 
 # --- Figure Parameters ---
