@@ -28,24 +28,6 @@ GAMMA = TRANS.Gamma
 DETUNINGS = [(-0.5*i*GAMMA + 0.5) for i in range(2, 40)]
 
 
-# --- Physical Functions ---
-def radial_temperature(atom_array):
-    vx = atom_array[:, 3, :]
-    vy = atom_array[:, 4, :]
-    v_sq = vx**2 + vy**2
-    T_radial = MASS * np.mean(v_sq, axis=0) / (2 * KB)
-    
-    return T_radial
-
-
-def axial_temperature(atom_array):
-    vz = atom_array[:, 5, :]
-    v_sq = vz**2    
-    T_axial = MASS * np.mean(v_sq, axis=0) / (2 * KB)
-    
-    return T_axial
-
-
 # --- Setup Initial Conditions ---
 T = np.linspace(0, TOTAL_DURATION, STEPS_NUMBER)  
 
@@ -89,7 +71,6 @@ def catching_rate(traj):
 # --- Change Existing Detunings ---
 def clear_detunings():
     configuration_MM.rm_atomlight_coupling("main","laser_ZS_1")
-
 
 
 def add_detunings(detuning):

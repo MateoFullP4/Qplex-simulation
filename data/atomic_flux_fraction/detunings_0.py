@@ -30,5 +30,6 @@ l10 = [0.0, 0.0, 0.001, 0.0, 0.001, 0.002, 0.008, 0.015, 0.03, 0.028, 0.025, 0.0
 data = np.array([l1, l2, l3, l4, l5, l6, l7, l8, l9, l10])
 mean_rates = np.mean(data, axis=0)
 
+
 plt.scatter(detunings, mean_rates)
 plt.show()
