@@ -15,7 +15,7 @@ from configurations.oven_diffraction import u0_diffraction, N_ATOMS
 
 # --- Result File ---
 ROOT = Path(__file__).resolve().parent
-DATA_FOLDER = ROOT.parent / "data simulations" / "atomic_flux_fraction"
+DATA_FOLDER = ROOT.parent / "data" / "atomic_flux_fraction"
 SAVE = False
 
 # --- Simulation Parameters ---

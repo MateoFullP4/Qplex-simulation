@@ -9,7 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 BASE_DIR = ROOT.parent
 # Ensure the folder name matches your OS ("Data_simulations" vs "data simulations")
-DATA_DIR = BASE_DIR / "data simulations" / "atomic_flux_fraction"
+DATA_DIR = BASE_DIR / "data" / "atomic_flux_fraction"
 SAVE_DIR = BASE_DIR / "figures" / "atomic_flux_fraction"
 SAVE_DIR.mkdir(parents=True, exist_ok=True)
 

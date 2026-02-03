@@ -12,7 +12,7 @@ from configurations.red_mot_configuration import configuration_MM
 
 # --- Result File ---
 ROOT = Path(__file__).resolve().parent
-DATA_FOLDER = ROOT.parent / "data simulations"
+DATA_FOLDER = ROOT.parent / "data"
 SIM_RESULT_FILE = DATA_FOLDER/"zeeman_slower.npz"
 SAVE = False
 

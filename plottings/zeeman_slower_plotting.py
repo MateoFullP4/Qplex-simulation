@@ -9,7 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 FIGURE_FOLDER = ROOT.parent / "figures" / "force_map_trajectories"
 FIGURE_FOLDER.mkdir(parents=True, exist_ok=True)
-SIM_DATA_FILE = ROOT.parent / "data simulations" / "zeeman_slower.npz"
+SIM_DATA_FILE = ROOT.parent / "data" / "zeeman_slower.npz"
 
 # --- File parameters ---
 SAVE = True
