@@ -7,7 +7,7 @@ from pathlib import Path
 
 # --- Import Magnetic Configuration ---
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from configurations.red_mot_configuration import configuration_MM
+from configurations.blue_mot_configuration import configuration_MM
 
 
 # --- Result File ---

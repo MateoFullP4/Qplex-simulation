@@ -29,6 +29,13 @@ import os
 import sys
 
 
+# --- Constants ---
+ZS_RADIUS = 6.7e-3
+ZS_POWER = 225e-3
+MM_RADIUS = 25e-3
+MM_POWER = 100e-3
+
+
 # --- Import Magnetic Configuration ---
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from configurations.magnetic_configuration import mag_field_asymmetric
@@ -36,13 +43,13 @@ from configurations.magnetic_configuration import mag_field_asymmetric
 # --- Atom Setup ---
 atom = Ytterbium()
 main = atom.trans["main"]
-gamma = main.Gamma
+GAMMA = main.Gamma
 
 # --- Laser Setup ---
 l399_ZS_1 = GaussianLaserBeam(
     wavelength = 399e-9,
-    waist = 6.7e-3, 
-    power = 225e-3,
+    waist = ZS_RADIUS, 
+    power = ZS_POWER,
     waist_position = (0, 0, 0),
     direction = (0, 0, -1), 
     polarization = Horizontal(),
@@ -51,8 +58,8 @@ l399_ZS_1 = GaussianLaserBeam(
 
 l399_MM_d1 = GaussianLaserBeam(
     wavelength = 399e-9,
-    waist = 25e-3,
-    power = 100e-3,
+    waist = MM_RADIUS,
+    power = MM_POWER,
     waist_position = (0, 0, 0), 
     direction = (1, 1, 1),
     polarization = CircularRight(),
@@ -61,8 +68,8 @@ l399_MM_d1 = GaussianLaserBeam(
 
 l399_MM_d2 = GaussianLaserBeam(
     wavelength = 399e-9,
-    waist = 25e-3,
-    power = 100e-3,
+    waist = MM_RADIUS,
+    power = MM_POWER,
     waist_position = (0, 0, 0), 
     direction = (-1, 1, -1),
     polarization = CircularRight(),
@@ -71,8 +78,8 @@ l399_MM_d2 = GaussianLaserBeam(
 
 l399_MM_d3 = GaussianLaserBeam(
     wavelength = 399e-9,
-    waist = 25e-3,
-    power = 100e-3,
+    waist = MM_RADIUS,
+    power = MM_POWER,
     waist_position = (0, 0, 0), 
     direction = (1, -1, -1),
     polarization = CircularLeft(),
@@ -81,8 +88,8 @@ l399_MM_d3 = GaussianLaserBeam(
 
 l399_MM_d4 = GaussianLaserBeam(
     wavelength = 399e-9,
-    waist = 25e-3,
-    power = 100e-3,
+    waist = MM_RADIUS,
+    power = MM_POWER,
     waist_position = (0, 0, 0), 
     direction = (-1, -1, 1),
     polarization = CircularLeft(),
@@ -95,10 +102,10 @@ configuration_MM.atom = atom
 configuration_MM += l399_MM_d1, l399_MM_d2, l399_MM_d3, l399_MM_d4, l399_ZS_1, mag_field_asymmetric
 
 # --- Add Atom-light Coupling ---
-configuration_MM.add_atomlight_coupling("laser_MM_d1", "main", -1.0*gamma)
-configuration_MM.add_atomlight_coupling("laser_MM_d2", "main", -1.0*gamma)
-configuration_MM.add_atomlight_coupling("laser_MM_d3", "main", -1.4*gamma)
-configuration_MM.add_atomlight_coupling("laser_MM_d4", "main", -1.4*gamma)
-configuration_MM.add_atomlight_coupling("laser_ZS_1", "main", -12.5*gamma)
+configuration_MM.add_atomlight_coupling("laser_MM_d1", "main", -1.0*GAMMA)
+configuration_MM.add_atomlight_coupling("laser_MM_d2", "main", -1.0*GAMMA)
+configuration_MM.add_atomlight_coupling("laser_MM_d3", "main", -1.4*GAMMA)
+configuration_MM.add_atomlight_coupling("laser_MM_d4", "main", -1.4*GAMMA)
+configuration_MM.add_atomlight_coupling("laser_ZS_1", "main", -12.5*GAMMA)
 
 
