@@ -19,9 +19,6 @@ from configurations.red_mot_configuration import configuration_MM
 All beams are positioned relative to the origin (0,0,0). Directions are given as (x, y, z) unit vectors.
 """
 
-import numpy as np
-import os
-import sys
 from atomsmltr.atoms import Ytterbium
 from atomsmltr.environment.lasers import GaussianLaserBeam
 from atomsmltr.environment.lasers.polarization import CircularLeft, CircularRight, Horizontal
