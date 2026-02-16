@@ -3,7 +3,7 @@ The data files in the "atomic_flux_fraction" subfolder come from running the "Ze
 folder multiple times. I didn't push the .npz files on the Github (which can be enabled through the SAVE variable for memory size purpose, 
 so I just copy-pasted it in these files.
 
-Each file of this subfolder thus contains 10 lists of the finak catching rate depending on the detunings. 
+Each file of this subfolder thus contains 10 lists of the final catching rate depending on the detunings. 
 In this file, the detunings are multiple of Gamma. 
 
 You can obviously run the code yourself to validate the data, or use it as it is here. 
