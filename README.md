@@ -126,7 +126,7 @@ This ensures traceability and reproducibility.
 
 ---
 
-## 4. plottings/
+## 4. Plottings/
 
 Contains scripts dedicated to:
 
@@ -145,7 +145,7 @@ python plottings/my_plot_script.py
 
 ---
 
-## 5. figures/
+## 5. Figures/
 
 Stores generated plots and visualizations.
 
@@ -153,7 +153,7 @@ Figures are automatically saved by scripts in `plottings/`.
 
 This folder should not contain manually edited files.
 
-The figures are by default saved as `.pdf`.
+The figures are by default saved as `.pdf` but scripts can be modified to save as `.png` or other formats if required. 
 
 ---
 
@@ -221,7 +221,7 @@ All quantities are expressed in SI units:
 
 ## Other
 
-For any other questions about the conventions used in `atomsmltr` you can refer to this link:
+For any other questions, please refer to the `atomsmltr` documentation for more detailed physical conventions:
 
 https://github.com/adareau/atomSmltr.git
 
