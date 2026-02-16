@@ -36,7 +36,6 @@ Dependencies:
 - NumPy is used for array handling.
 """
 
-
 import numpy as np
 import sys
 import os
