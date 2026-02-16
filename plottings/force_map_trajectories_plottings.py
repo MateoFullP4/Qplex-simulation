@@ -1,3 +1,36 @@
+"""
+This file is designed to visualize the force map and atomic trajectories
+for a single Zeeman slower detuning in the QPlex simulation.
+
+The generated figure contains:
+
+1. A color-coded background showing the axial force $F_z$ experienced by atoms
+   along the z-axis as a function of their axial velocity $v_z$.
+2. Trajectories of individual atoms over time, color-coded by outcome:
+   - Blue: Atoms trapped within the MOT region
+   - Red: Atoms that pass through the MOT but are lost
+   - Black: Atoms that escape the simulation bounds
+
+Conventions used in this file:
+
+- Axial direction: z-axis
+- Axial speed: v_z in m/s
+- Position: z in cm for plotting
+- Force: F_z in Newtons
+
+The simulation data are loaded from a `.npz` file in the
+`data/force_map_trajectories/` folder, which must be generated
+prior to running this plotting script.
+
+Purpose:
+
+- Compare the axial force landscape to atomic trajectories
+- Identify trapped vs. lost or escaped atoms
+- Provide visual insight into the MOT performance at a given detuning
+
+"""
+
+
 import sys
 import os
 import numpy as np

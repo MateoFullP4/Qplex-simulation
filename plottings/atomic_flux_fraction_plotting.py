@@ -1,3 +1,19 @@
+"""
+This file is designed to plot the atomic flux fraction as a function of laser detuning.
+The plotted graph shows:
+
+- Mean flux fraction of atoms for different detunings.
+
+Conventions used in this file:
+
+- Detunings are expressed in the same units as defined in the data scripts.
+- Mean rates represent the average atomic flux fraction calculated per detuning.
+
+The data are fetched from Python files in the `data/atomic_flux_fraction/` folder.
+Each file should contain two lists: `detunings` and `mean_rates`.
+
+"""
+
 import os
 import sys
 import importlib.util
