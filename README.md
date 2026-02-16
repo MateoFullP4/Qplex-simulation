@@ -159,33 +159,32 @@ The figures are by default saved as `.pdf`.
 
 # How to Run a Simulation
 
-1. Choose or create a configuration in `configurations/`
-2. Create or modify a script in `simulations/`
-3. Run the simulation:
+## To Add a New Configuration
 
-```bash
-python simulations/my_simulation.py
-```
-
-4. Results will be saved in:
-
-```
-data/my_simulation/
-```
-
-5. Generate plots:
-
-```bash
-python plottings/my_plot_script.py
-```
-
-6. Figures will be saved in:
-
-```
-figures/
-```
+1. Create a new file inside `configurations/`
+2. Follow the structure of existing configurations
+3. Export a `Configuration` object
 
 ---
+
+## To Study a New Parameter
+
+1. Create a new script inside `simulations/`
+2. Import an existing configuration
+3. Save results in a new folder inside `data/`
+
+Do not overwrite existing data.
+
+---
+
+## To Generate New Figures
+
+1. Create a script inside `plottings/`
+2. Load the required dataset from `data/`
+3. Save figures inside `figures/`
+
+---
+
 
 # Dependency: atomsmltr
 
