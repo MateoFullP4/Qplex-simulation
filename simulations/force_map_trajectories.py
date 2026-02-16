@@ -1,3 +1,42 @@
+"""
+This file is designed to simulate atomic trajectories and compute the axial
+force map for a Zeeman slower detuning in the QPlex setup.
+
+Workflow:
+
+1. Define a grid of initial axial positions and velocities for the atoms.
+2. Generate a list of initial conditions `u0_list` with different initial velocities.
+3. Integrate the atomic trajectories over time using `RK4` from atomsmltr.
+4. Compute the axial force $F_z$ along a (z, v_z) grid using the MOT configuration.
+5. Save the resulting trajectories and force map to a `.npz` file in
+   `data/force_map_trajectories/`.
+
+Conventions and notes:
+
+- Axial direction is along the z-axis.
+- Position coordinates are in meters; velocities in m/s.
+- Force is computed in Newtons.
+- The force map grid is defined using `Z_GRID` and `VZ_GRID`.
+- Initial positions for each atom are set to the origin in x and y,
+  with z spanning from -0.15 to 0.35 m.
+- `u0_list` defines atoms starting at z = -0.15 m with velocities
+  spanning from 0 to 550 m/s.
+
+Purpose:
+
+- Visualize the axial force landscape $F_z(z,v_z)$.
+- Provide trajectory data for plotting and analysis of trapped, lost, and
+  escaped atoms.
+- Facilitate understanding and optimization of Zeeman slower parameters.
+
+Dependencies:
+
+- `configuration_MM` must be defined in `configurations.blue_mot_configuration`
+  and compatible with `atomsmltr.RK4`.
+- NumPy is used for array handling.
+"""
+
+
 import numpy as np
 import sys
 import os

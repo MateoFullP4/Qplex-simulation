@@ -1,6 +1,38 @@
 """
+This file is designed to perform a detuning sweep for the Zeeman slower 
+beam in the QPlex simulation, and to compute the corresponding atomic 
+flux fraction (catching rate) for Strontium atoms.
 
+The workflow of this script is:
+
+1. Sweep a range of detunings for the Zeeman slower laser.
+2. For each detuning:
+    - Update the atom-light coupling in the MOT configuration.
+    - Run the atomic trajectory simulation using RK4 integration from atomsmltr.
+    - Apply catching criteria to determine which atoms are trapped, lost, or escaped.
+    - Compute the fraction of trapped atoms (catching rate).
+    - Optionally save simulation data to the `data/atomic_flux_fraction` folder.
+    
+Conventions and notes:
+
+- Axial direction is along z-axis.
+- Atoms are considered:
+    - Trapped if they remain within the MOT region without exceeding thresholds.
+    - Lost if they pass through the MOT region but exceed minor thresholds.
+    - Escaped if they leave the simulation bounds.
+- Time evolution is performed with `STEPS_NUMBER` steps over `TOTAL_DURATION`.
+- Detunings are expressed in units of the atomic natural linewidth Γ.
+- Initial conditions for the atoms are loaded from the oven diffraction sample `u0_diffraction`.
+- The script assumes that `configuration_MM` is a MOT configuration object
+  compatible with `atomsmltr.RK4`.
+
+Purpose:
+
+- Study the effect of Zeeman slower detuning on the MOT catching efficiency.
+- Generate data for plotting atomic flux fraction vs detuning.
+- Provide a reproducible workflow for future parameter optimization.
 """
+
 
 import numpy as np
 import sys
