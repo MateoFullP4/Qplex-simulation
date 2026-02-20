@@ -27,7 +27,7 @@ import matplotlib.pyplot as plt
 
 
 # --- Constants Definition ---
-N_ATOMS = 1000
+N_ATOMS = 10
 OVEN_TEMPERATURE = 823
 MASS = Strontium().mass
 KB = csts.Boltzmann
@@ -213,4 +213,3 @@ ortho_distribution_grid = orthogonal_distribution(v_grid_ortho)
 v0_diffraction = sample_velocities()
 r0_diffraction = sample_positions() 
 u0_diffraction = np.hstack([r0_diffraction, v0_diffraction])
-

@@ -17,34 +17,44 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from configurations.red_mot_configuration import configuration_MM
 
 All beams are positioned relative to the origin (0,0,0). Directions are given as (x, y, z) unit vectors.
+
 """
 
-from atomsmltr.atoms import Ytterbium
+from atomsmltr.atoms import Strontium
 from atomsmltr.environment.lasers import GaussianLaserBeam
 from atomsmltr.environment.lasers.polarization import CircularLeft, CircularRight, Horizontal
 from atomsmltr.simulation import Configuration
+import numpy as np
 
 
 # --- Constants ---
-TOTAL_RADIUS = 0
-NARROW_RADIUS = 0
+TOTAL_RADIUS = 12e-3
+NARROW_RADIUS = 4e-3
 BROAD_RADIUS = TOTAL_RADIUS - NARROW_RADIUS
-TOTAL_POWER = 0
-NARROW_POWER = 0
+TOTAL_POWER = 6e-3
+NARROW_POWER = 3e-3
 BROAD_POWER = TOTAL_POWER - NARROW_POWER
-DETUNINGS_BB = []
-DETUNINGS_NB = []
+PI = np.pi
+FREQUENCY_GAP = 5
+NUMBER_OF_DETUNINGS = 200//FREQUENCY_GAP
+WEIGHT = 1 / (NUMBER_OF_DETUNINGS + 1)
 
 
 # --- Atom Setup ---
-atom = Ytterbium()
-main = atom.trans["main"]
-gamma = main.Gamma
+atom = Strontium()
+intercombination = atom.trans["intercombination"]
+gamma = intercombination.Gamma
+
+
+# --- Detunings ---
+DETUNINGS_BB = [(-FREQUENCY_GAP*i*gamma*PI, WEIGHT) for i in range(1, NUMBER_OF_DETUNINGS)]
+DETUNINGS_BB.append((-2*gamma*PI, WEIGHT))
+DETUNINGS_NB = -2*gamma*PI
 
 
 # --- Laser Setup ---
 l399_NB_1 = GaussianLaserBeam(
-    wavelength = 399e-9,
+    wavelength = 689e-9,
     waist = NARROW_RADIUS, 
     power = NARROW_POWER/4,
     waist_position = (0, 0, 0),
@@ -55,7 +65,7 @@ l399_NB_1 = GaussianLaserBeam(
 
 
 l399_NB_2 = GaussianLaserBeam(
-    wavelength = 399e-9,
+    wavelength = 689e-9,
     waist = NARROW_RADIUS, 
     power = NARROW_POWER/4,
     waist_position = (0, 0, 0),
@@ -66,7 +76,7 @@ l399_NB_2 = GaussianLaserBeam(
 
 
 l399_NB_3 = GaussianLaserBeam(
-    wavelength = 399e-9,
+    wavelength = 689e-9,
     waist = NARROW_RADIUS, 
     power = NARROW_POWER/4,
     waist_position = (0, 0, 0),
@@ -77,7 +87,7 @@ l399_NB_3 = GaussianLaserBeam(
 
 
 l399_NB_4 = GaussianLaserBeam(
-    wavelength = 399e-9,
+    wavelength = 689e-9,
     waist = NARROW_RADIUS, 
     power = NARROW_POWER/4,
     waist_position = (0, 0, 0),
@@ -88,7 +98,7 @@ l399_NB_4 = GaussianLaserBeam(
 
 
 l399_BB_1 = GaussianLaserBeam(
-    wavelength = 399e-9,
+    wavelength = 689e-9,
     waist = BROAD_RADIUS, 
     power = BROAD_POWER/4,
     waist_position = (0, 0, 0),
@@ -99,7 +109,7 @@ l399_BB_1 = GaussianLaserBeam(
 
 
 l399_BB_2 = GaussianLaserBeam(
-    wavelength = 399e-9,
+    wavelength = 689e-9,
     waist = BROAD_RADIUS, 
     power = BROAD_POWER/4,
     waist_position = (0, 0, 0),
@@ -110,7 +120,7 @@ l399_BB_2 = GaussianLaserBeam(
 
 
 l399_BB_3 = GaussianLaserBeam(
-    wavelength = 399e-9,
+    wavelength = 689e-9,
     waist = BROAD_RADIUS, 
     power = BROAD_POWER/4,
     waist_position = (0, 0, 0),
@@ -121,7 +131,7 @@ l399_BB_3 = GaussianLaserBeam(
 
 
 l399_BB_4 = GaussianLaserBeam(
-    wavelength = 399e-9,
+    wavelength = 689e-9,
     waist = BROAD_RADIUS, 
     power = BROAD_POWER/4,
     waist_position = (0, 0, 0),
@@ -138,14 +148,16 @@ configuration_NB_BB += l399_BB_1, l399_BB_2, l399_BB_3, l399_BB_4, l399_NB_1, l3
 
 
 # --- Add Atom-light Coupling ---
-configuration_NB_BB.add_atomlight_coupling("laser_NB1", "main", DETUNINGS_NB)
-configuration_NB_BB.add_atomlight_coupling("laser_NB2", "main", DETUNINGS_NB)
-configuration_NB_BB.add_atomlight_coupling("laser_NB3", "main", DETUNINGS_NB)
-configuration_NB_BB.add_atomlight_coupling("laser_NB4", "main", DETUNINGS_NB)
-configuration_NB_BB.add_atomlight_coupling("laser_BB1", "main", DETUNINGS_BB)
-configuration_NB_BB.add_atomlight_coupling("laser_BB2", "main", DETUNINGS_BB)
-configuration_NB_BB.add_atomlight_coupling("laser_BB3", "main", DETUNINGS_BB)
-configuration_NB_BB.add_atomlight_coupling("laser_BB4", "main", DETUNINGS_BB)
+configuration_NB_BB.add_atomlight_coupling("laser_NB_1", "main", DETUNINGS_NB)
+configuration_NB_BB.add_atomlight_coupling("laser_NB_2", "main", DETUNINGS_NB)
+configuration_NB_BB.add_atomlight_coupling("laser_NB_3", "main", DETUNINGS_NB)
+configuration_NB_BB.add_atomlight_coupling("laser_NB_4", "main", DETUNINGS_NB)
+configuration_NB_BB.add_atomlight_coupling("laser_BB_1", "main", DETUNINGS_BB)
+configuration_NB_BB.add_atomlight_coupling("laser_BB_2", "main", DETUNINGS_BB)
+configuration_NB_BB.add_atomlight_coupling("laser_BB_3", "main", DETUNINGS_BB)
+configuration_NB_BB.add_atomlight_coupling("laser_BB_4", "main", DETUNINGS_BB)
+
+
 
 
 
