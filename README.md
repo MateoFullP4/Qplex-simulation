@@ -84,12 +84,7 @@ Typical studies include:
 - Atomic trajectories
 - Capture efficiency
 
-Each simulation script should:
-
-1. Select a configuration
-2. Define initial conditions
-3. Run the time evolution
-4. Save outputs in a dedicated subfolder inside `data/`
+`data/`
 
 Example execution:
 
